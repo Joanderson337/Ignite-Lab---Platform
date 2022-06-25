@@ -8,12 +8,12 @@ import { Footer } from "../../components/Footer/Footer";
 import { useCreateSubscriberMutation } from "../../graphql/generated";
 
 export function Subscribe() {
-  const navigate = useNavigate();
+  const navigate = useNavigate()
 
   const [name, setName] = useState('');
   const [email, setEmail] = useState('');
 
-  const [createSubscriber, { loading }] = useCreateSubscriberMutation();
+  const [createSubscriber, { loading }] = useCreateSubscriberMutation()
 
   async function handleSubscribe(event: FormEvent) {
     event.preventDefault();
@@ -21,13 +21,12 @@ export function Subscribe() {
     await createSubscriber({
       variables: {
         name,
-        email
+        email,
       }
     })
 
-    navigate('/event');
+    navigate('/event')
   }
-
 
   return (
     <main className="flex flex-1 flex-col items-center justify-between min-h-screen bg-blur bg-cover bg-no-repeat">
