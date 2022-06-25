@@ -12,14 +12,14 @@ interface LessonProps {
 }
 
 
-export function Lesson({ title, slug, availableAt, type }: LessonProps) {
-  const { slugParam } = useParams<{ slugParam: string }>()
-  const isLessonAvailable = isPast(availableAt);
-  const availableDateFormat = format(availableAt, "EEEE' • 'd' de 'MMMM' • 'k'h'mm", {
+export function Lesson(props: LessonProps) {
+  const { slug } = useParams<{ slug: string }>()
+  const isLessonAvailable = isPast(props.availableAt);
+  const availableDateFormat = format(props.availableAt, "EEEE' • 'd' de 'MMMM' • 'k'h'mm", {
     locale: ptBR,
   })
 
-  const isActiveLesson = slugParam === slug
+  const isActiveLesson = slug === props.slug
 
   return (
     <>
@@ -45,7 +45,7 @@ export function Lesson({ title, slug, availableAt, type }: LessonProps) {
                 'border-white': isActiveLesson,
                 'border-green-300': !isActiveLesson,
               })}>
-                {type === 'live' ? 'AO VIVO' : 'AULA PRÁTICA'}
+                {props.type === 'live' ? 'AO VIVO' : 'AULA PRÁTICA'}
               </span>
             </header>
 
@@ -53,7 +53,7 @@ export function Lesson({ title, slug, availableAt, type }: LessonProps) {
               'text-white': isActiveLesson,
               'text-gray-200': !isActiveLesson,
             })}>
-              {title}
+              {props.title}
             </strong>
           </div>
         </NavLink>
@@ -67,13 +67,19 @@ export function Lesson({ title, slug, availableAt, type }: LessonProps) {
                   Em breve
                 </span>
 
-                <span className="text-xs rounded py-[.125rem] px-2 text-white border border-green-300">
-                  {type === 'live' ? 'AO VIVO' : 'AULA PRÁTICA'}
+                <span className={classNames('text-xs rounded py-[0.125rem] px-2 text-white border font-bold', {
+             'border-white': isActiveLesson,
+             'border-green-300': !isActiveLesson
+                 })}>
+                  {props.type === 'live' ? 'AO VIVO' : 'AULA PRÁTICA'}
                 </span>
               </header>
 
-              <strong className="text-gray-200 text-left mt-5 block">
-                {title}
+              <strong className={classNames('mt-5 block', {
+            'text-white': isActiveLesson,
+             'text-gray-200': !isActiveLesson
+             })}>
+                {props.title}
               </strong>
             </div>
           </a>
